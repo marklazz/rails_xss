@@ -28,6 +28,17 @@ module ActionView
         simple_format_without_escaping(ERB::Util.h(text), html_options)
       end
       alias_method_chain :simple_format, :escaping
+
+      def highlight_with_escaping(text, phrases, *args)
+        highlight_without_escaping(ERB::Util.html_escape(text), phrases, *args)
+      end
+      alias_method_chain :highlight, :escaping
+
+      def auto_link_with_escaping(text, *args, &block)
+        return ''.html_safe if text.blank?
+        auto_link_without_escaping(ERB::Util.html_escape(text), *args, &block)
+      end
+      alias_method_chain :auto_link, :escaping
     end
 
     module TagHelper
