@@ -65,6 +65,19 @@ module ActionView
         end
       end
     end
+
+    module FormOptionsHelper
+
+      def option_groups_from_collection_for_select_with_escaping(collection, group_method, group_label_method, option_key_method, option_value_method, selected_key = nil)
+        option_groups_from_collection_for_select_without_escaping(collection, group_method, group_label_method, option_key_method, option_value_method, selected_key).html_safe
+      end
+      alias_method_chain :option_groups_from_collection_for_select, :escaping
+
+      def grouped_options_for_select_with_escaping(grouped_options, selected_key = nil, prompt = nil)
+        grouped_options_for_select_without_escaping(grouped_options, selected_key, prompt).html_safe
+      end
+      alias_method_chain :grouped_options_for_select, :escaping
+    end
   end
 end
 
